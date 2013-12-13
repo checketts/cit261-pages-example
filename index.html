@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js">
+    </script>
+
+    <script>
+        // Browser-side applications do not use the API secret.
+        var client = new Dropbox.Client({
+            key: "g7dox4251949j1u"
+        });
+
+        var startup = function() {
+            var output = document.getElementById("output");
+            var person = {};
+            
+            var clickLink = document.getElementById("clickLink");
+            clickLink.addEventListener("onClick",function(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "https://api.mongolab.com/api/1/databases/cit231/collections/students/52a6ac46e4b014699831312a?apiKey=o8R4p1ZGRQpCgQX1xe6mV1UeWZch45i4", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+    
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        console.log(xhr.responseText)
+                        person = JSON.parse(xhr.responseText);
+                        
+                        output.textContent = person.name + " " + person.count;
+                    }
+                }
+                xhr.send();
+            });
+
+            output.textContent = "Bob";
+
+//            
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://api.mongolab.com/api/1/databases/cit231/collections/students/52a6ac46e4b014699831312a?apiKey=o8R4p1ZGRQpCgQX1xe6mV1UeWZch45i4", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText)
+                    person = JSON.parse(xhr.responseText);
+                    
+                    output.textContent = person.name + " " + person.count;
+                }
+            }
+            xhr.send();
+
+
+        }
+
+
+        document.addEventListener("DOMContentLoaded", startup, false)
+    </script>
+
+
+</head>
+
+<body>
+    Hi there, check it out. Really.
+
+    <div id="output">out</div>
+    
+    <a id="clickLink">Click to add to count</a>
+
+</body>
+
+</html>
